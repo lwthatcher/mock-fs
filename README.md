@@ -13,6 +13,7 @@ Several assumptions needed to be made when designing the system.
 To avoid confusion several relevant decisions have been listed below:
 - uses built-in `FileNotFoundError` for _Path not found_ exception
 - uses built-in `FileExistsError` for _Path already exists_ exception
+- the WriteToFile method will currently overwrite any existing content in the target text file
 
 ### Specifications
 The complete specifications can be found on the wiki under [Assignment Specifications](https://github.com/lwthatcher/mock-fs/wiki/Assignment-Specifications)

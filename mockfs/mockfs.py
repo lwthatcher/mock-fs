@@ -6,31 +6,36 @@ ENTITY_TYPES = ('drive', 'folder', 'text', 'zip')
 
 class MockFileSystem:
 
+  # region [Constructor]
   def __init__(self):
-    # TODO: add some sort of internal storage for entities
-    pass
+    # TODO: possibly allow basic initialization for debugging?
+    self._entities = []
+  # endregion
 
+  # region [Properties]
+  @property
+  def entities(self):
+    # TODO: possible map from internal list to proper entity objects?
+    return self._entities
+  # endregion
+
+  # region [Public Methods]
   def Create(self, _type, name, path):
     """Creates an entity of the specified type in the mock file-system.
-    
     Arguments:
       _type -- the entity type to create (must be one of ENTITY_TYPES)
       name -- the name to give the specified entity
       path -- the path to the parent entity, use None for drives
-    
     Raises:
-      FileNotFoundError -- when the parent directory/entity cannot be found
-      FileExistsError -- an entity with the given name and parent already exists
-      
+        FileNotFoundError -- when the parent directory/entity cannot be found
+        FileExistsError -- an entity with the given name and parent already exists  
     """
     pass
 
   def Delete(self, path):
     """Deletes the entity at the specified path
-    
     Arguments:
       path -- the path to the entity to delete
-    
     Raises:
       FileNotFoundError -- the target entity cannot be found
     """
@@ -38,7 +43,7 @@ class MockFileSystem:
 
   def Move(self, src, dest):
     """Changes the parent of an entity.
-    
+
     Arguments:
       src -- the source entity's current path
       dest -- the target destination of the new path if successful
@@ -61,3 +66,8 @@ class MockFileSystem:
       NotATextFileError
     """
     pass
+  # endregion
+
+  # region [Helper Methods]
+
+  # endregion
