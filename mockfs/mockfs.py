@@ -1,4 +1,63 @@
 """contains container class for basic mock file system access"""
 
+# currently supported entity types
+ENTITY_TYPES = ('drive', 'folder', 'text', 'zip')
+
+
 class MockFileSystem:
-  pass
+
+  def __init__(self):
+    # TODO: add some sort of internal storage for entities
+    pass
+
+  def Create(self, _type, name, path):
+    """Creates an entity of the specified type in the mock file-system.
+    
+    Arguments:
+      _type -- the entity type to create (must be one of ENTITY_TYPES)
+      name -- the name to give the specified entity
+      path -- the path to the parent entity, use None for drives
+    
+    Raises:
+      FileNotFoundError -- when the parent directory/entity cannot be found
+      FileExistsError -- an entity with the given name and parent already exists
+      
+    """
+    pass
+
+  def Delete(self, path):
+    """Deletes the entity at the specified path
+    
+    Arguments:
+      path -- the path to the entity to delete
+    
+    Raises:
+      FileNotFoundError -- the target entity cannot be found
+    """
+    pass
+
+  def Move(self, src, dest):
+    """Changes the parent of an entity.
+    
+    Arguments:
+      src -- the source entity's current path
+      dest -- the target destination of the new path if successful
+    
+    Raises:
+      FileNotFoundError
+      FileExistsError
+    """
+    pass
+
+  def WriteToFile(self, path, content):
+    """Writes content to a text file.
+    
+    Arguments:
+      path -- the path to the text file to write to
+      content -- the content to be written to the text file. 
+        This will overwrite any content already there.
+    
+    Raises:
+      NotATextFileError
+    """
+    pass
