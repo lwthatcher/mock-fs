@@ -1,4 +1,5 @@
 """contains container class for basic mock file system access"""
+import os
 
 # currently supported entity types
 ENTITY_TYPES = ('drive', 'folder', 'text', 'zip')
@@ -9,7 +10,7 @@ class MockFileSystem:
   # region [Constructor]
   def __init__(self):
     # TODO: possibly allow basic initialization for debugging?
-    self._entities = []
+    self._entities = {}
   # endregion
 
   # region [Properties]
