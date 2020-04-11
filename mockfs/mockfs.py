@@ -30,7 +30,8 @@ class MockFileSystem:
       path -- the path to the parent entity, use None for drives
     Raises:
         FileNotFoundError -- when the parent directory/entity cannot be found
-        FileExistsError -- an entity with the given name and parent already exists  
+        FileExistsError -- an entity with the given name and parent already exists
+        IllegalFileSystemOperationError
     """
     if _type not in ENTITY_TYPES:
       msg = 'Unsupported type: "{}"'.format(_type)

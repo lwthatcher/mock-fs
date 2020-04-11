@@ -1,12 +1,13 @@
 """module for defining the multiple file-system 'entity' types"""
-# TODO: possibly move to its own package later?
+import os
 
 class FS_Entity:
   """base class for other entities, should not be used directly"""
   # region [Constructor]
-  def __init__(self, _type, name, path):
-    self.name = name
-    self.path = path
+  def __init__(self, fs, _type, full_path):
+    self._fs = fs
+    self._type = _type
+    self._full_path = full_path  # assume a tuple
   # endregion
 
   # region [Properties]
@@ -16,11 +17,11 @@ class FS_Entity:
 
   @property
   def Name(self):
-    return self.name
+    return self._full_path[-1]
   
   @property
   def Path(self):
-    return self.path
+    return self._full_path[:-1].join('/')
 
   @property
   def Size(self):
@@ -43,8 +44,8 @@ class FS_Entity:
 
 class FolderEntity(FS_Entity):
   # region [Constructor]
-  def __init__(self, name, path):
-    super.__init__('folder', name, path)
+  def __init__(self, fs, full_path):
+    super.__init__(fs, 'folder', full_path)
   # endregion
 
   # region [Implementation Methods]
