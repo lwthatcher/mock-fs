@@ -19,6 +19,11 @@ class TestFolderEntity(TestCase):
     fs = MockFileSystem()
     f = FolderEntity(fs, ('D', 'dir'))
     self.assertEqual(f.Name, 'dir')
+  
+  def test_Path(self):
+    fs = MockFileSystem()
+    f = FolderEntity(fs, ('D', 'dir'))
+    self.assertEqual(f.Path, 'D\\dir')
 # endregion
 
 # region [Drive Tests]
@@ -38,6 +43,11 @@ class TestDriveEntity(TestCase):
     fs = MockFileSystem()
     f = DriveEntity(fs, ('D'))
     self.assertEqual(f.Name, 'D')
+
+  def test_Path(self):
+    fs = MockFileSystem()
+    f = DriveEntity(fs, ('D'))
+    self.assertEqual(f.Path, 'D')
 # endregion
 
 
@@ -58,6 +68,11 @@ class TestTextFileEntity(TestCase):
     fs = MockFileSystem()
     f = TextFileEntity(fs, ('D', 'file.txt'))
     self.assertEqual(f.Name, 'file.txt')
+
+  def test_Path(self):
+    fs = MockFileSystem()
+    f = TextFileEntity(fs, ('D', 'file.txt'))
+    self.assertEqual(f.Path, 'D\\file.txt')
 # endregion
 
 
@@ -78,4 +93,9 @@ class TestZipFileEntity(TestCase):
     fs = MockFileSystem()
     f = ZipFileEntity(fs, ('D', 'zippy.zip'))
     self.assertEqual(f.Name, 'zippy.zip')
+
+  def test_Path(self):
+    fs = MockFileSystem()
+    f = ZipFileEntity(fs, ('D', 'zippy.zip'))
+    self.assertEqual(f.Path, 'D\\zippy.zip')
 # endregion

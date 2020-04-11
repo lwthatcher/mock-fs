@@ -35,7 +35,7 @@ class FS_Entity:
   
   @property
   def Path(self):
-    return self._full_path[:-1].join('/')
+    return '\\'.join(self._full_path)
 
   @property
   def Size(self):
