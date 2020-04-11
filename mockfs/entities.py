@@ -42,14 +42,38 @@ class FS_Entity:
   # endregion
 
 
-class FolderEntity(FS_Entity):
+class ContainerEntity(FS_Entity):
+  @property
+  def children(self):
+    return []
+
+  def _compute_size(self):
+    return 0
+
+
+class FolderEntity(ContainerEntity):
   # region [Constructor]
   def __init__(self, fs, full_path):
-    super.__init__(fs, 'folder', full_path)
+    super().__init__( fs, 'folder', full_path)
   # endregion
 
-  # region [Implementation Methods]
-  def _compute_size(self):
-    # TODO: implement
-    return 0
+
+class DriveEntity(ContainerEntity):
+  # region [Constructor]
+  def __init__(self, fs, full_path):
+    super().__init__(fs, 'drive', full_path)
+  # endregion
+
+
+class TextFileEntity(FS_Entity):
+  # region [Constructor]
+  def __init__(self, fs, full_path):
+    super().__init__(fs, 'text', full_path)
+  # endregion
+
+
+class ZipFileEntity(ContainerEntity):
+  # region [Constructor]
+  def __init__(self, fs, full_path):
+    super().__init__(fs, 'zip', full_path)
   # endregion

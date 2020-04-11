@@ -33,9 +33,13 @@ class MockFileSystem:
         FileExistsError -- an entity with the given name and parent already exists
         IllegalFileSystemOperationError
     """
+    # ensure provided type is valid
     if _type not in ENTITY_TYPES:
       msg = 'Unsupported type: "{}"'.format(_type)
       raise IllegalFileSystemOperationError(msg)
+    # check valid location/name
+    # create entity
+    # add entity to registry
 
   def Delete(self, path):
     """Deletes the entity at the specified path
