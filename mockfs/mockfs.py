@@ -1,9 +1,7 @@
 """contains container class for basic mock file system access"""
 import os
 from .util import IllegalFileSystemOperationError
-
-# currently supported entity types
-ENTITY_TYPES = ('drive', 'folder', 'text', 'zip')
+from .entities import ENTITY_TYPES
 
 
 class MockFileSystem:
