@@ -2,12 +2,26 @@
 import os
 
 class FS_Entity:
-  """base class for other entities, should not be used directly"""
+  """Base class for other entities, should not be used directly.
+  """
   # region [Constructor]
   def __init__(self, fs, _type, full_path):
+    """
+    Arguments:
+      fs - the MockFileSystem object containing this entity
+      _type - internally sets the provided entity-type
+      full_path - a list-like seperating out each path element,
+        with the last element being the name of the entity
+    """
     self._fs = fs
     self._type = _type
     self._full_path = full_path  # assume a tuple
+
+  # @classmethod
+  # def __init_subclass__(cls, TYPE, **kwargs):
+  #   """Called from the class defition of implementing sub-classes"""
+  #   cls.TYPE = TYPE
+  #   super().__init_subclass__(**kwargs)
   # endregion
 
   # region [Properties]
