@@ -1,5 +1,6 @@
 """contains container class for basic mock file system access"""
 import os
+from .util import IllegalFileSystemOperationError
 
 # currently supported entity types
 ENTITY_TYPES = ('drive', 'folder', 'text', 'zip')
@@ -31,7 +32,9 @@ class MockFileSystem:
         FileNotFoundError -- when the parent directory/entity cannot be found
         FileExistsError -- an entity with the given name and parent already exists  
     """
-    pass
+    if _type not in ENTITY_TYPES:
+      msg = 'Unsupported type: "{}"'.format(_type)
+      raise IllegalFileSystemOperationError(msg)
 
   def Delete(self, path):
     """Deletes the entity at the specified path
@@ -70,5 +73,6 @@ class MockFileSystem:
   # endregion
 
   # region [Helper Methods]
-
+  def get(self, path):
+    return self._entities.get[path]
   # endregion
