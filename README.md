@@ -11,6 +11,15 @@ To run all unit tests, enter the following command from the `mock-fs` project di
 ## Documentation Notes
 Several assumptions needed to be made when designing the system. 
 To avoid confusion several relevant decisions have been listed below:
+- Pythonic naming conventions were mostly followed,
+however property and function names specifically mentioned in the specifications
+were preserved whenever possible
+- Entity properties are primarily implemented as python properties.
+Currently this doesn't make a large difference, but it does allow internal
+representations to differ from the exposed API without substantial changes.
+It also limits direct access to the entity's internals.
+
+### Additional Notes
 - uses built-in `FileNotFoundError` for _Path not found_ exception
 - uses built-in `FileExistsError` for _Path already exists_ exception
 - the WriteToFile method will currently overwrite any existing content in the target text file
