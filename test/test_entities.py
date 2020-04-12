@@ -1,3 +1,8 @@
+"""Testing module for directly testing methods on various entity objects.
+
+Tests here differ from `test_mockfs.py` where the provided paths do
+not necessarily have to be valid paths within the file-system.
+"""
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.entities import entity

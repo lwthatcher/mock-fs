@@ -1,3 +1,8 @@
+"""Testing module for testing the mock file-system and its various components.
+
+Tests here differ from `test_entities.py` in that valid path construction
+is *required* for measuring expected behavior.
+"""
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.util import IllegalFileSystemOperationError, NotATextFileError
