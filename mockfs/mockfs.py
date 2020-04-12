@@ -36,7 +36,8 @@ class MockFileSystem:
       raise IllegalFileSystemOperationError('Unsupported type: "{}"'.format(_type))
     full_path = split_path(path, name)
     # ensure parents exist
-    
+    if not self.parents_exist(full_path):
+      raise FileNotFoundError('The path to the specified item does not exist.')
     # ensure does not already exist
     if full_path in self._entities.keys():
       raise FileExistsError('The specified path already exists.')
@@ -77,12 +78,16 @@ class MockFileSystem:
       content -- the content to be written to the text file. 
         This will overwrite any content already there.
     Raises:
+      FileNotFoundError
       NotATextFileError
     """
     pass
   # endregion
 
   # region [Helper Methods]
+  def exists(self, full_path):
+    return full_path in self._entities.keys()
+
   def get(self, full_path):
     return self._entities.get(full_path)
 
