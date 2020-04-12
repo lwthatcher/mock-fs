@@ -6,20 +6,55 @@ from mockfs.util import IllegalFileSystemOperationError
 class TestMockFileSystem(TestCase):
 
   # region [Public Method Tests]
-  def test_Create(self):
-    fs = MockFileSystem()
-    # can create drives
-    fs.Create('drive', 'X', None)
-    self.assertEqual(len(fs.entities), 1)
+  def setUp(self):
+    self.fs = MockFileSystem()
 
-  def test_Create__requires_valid_type(self):
-    fs = MockFileSystem()
+  def test_Create(self):
+    # can create drives
+    self.fs.Create('drive', 'X', None)
+    self.assertEqual(len(self.fs.entities), 1)
+    # can create folders
+    self.fs.Create('folder', 'X', 'folder1')
+    self.assertEqual(len(self.fs.entities), 2)
+    # can create nested folders
+    self.fs.Create('folder', 'X\\folder1', 'folder2')
+    self.assertEqual(len(self.fs.entities), 3)
+    # can create zip files (nested in folder)
+    self.fs.Create('zip', 'X\\folder1', 'zippy')
+    self.assertEqual(len(self.fs.entities), 4)
+    # can create text files (nested in folder)
+    self.fs.Create('text', 'X\\folder1', 'file.txt')
+    self.assertEqual(len(self.fs.entities), 5)
+
+  def test_Create__invalid_type(self):
     with self.assertRaises(IllegalFileSystemOperationError) as cm:
-      fs.Create('foo', 'bar', None)
+      self.fs.Create('foo', 'bar', None)
     self.assertEqual(str(cm.exception), 'Unsupported type: "foo"')
 
+  def test_Create__duplicate_entities(self):
+    self.fs.Create('drive', 'X', None)  # should succeed
+    with self.assertRaises(FileExistsError) as cm:
+      self.fs.Create('drive', 'X', None)  # should not succeed
+
+  def test_Create__missing_parents(self):
+    # missing single parent (drive)
+    with self.assertRaises(FileNotFoundError) as cm:
+      self.fs.Create('folder', 'X', 'dir')
+    # missing single parent (folder)
+    self.fs.Create('drive', 'Y', None)  # should succeed
+    with self.assertRaises(FileNotFoundError) as cm:
+      self.fs.Create('folder', 'Y\\folder1', 'folder2')
+    # missing multiple parents
+    with self.assertRaises(FileNotFoundError) as cm:
+      self.fs.Create('folder', 'X\\folder1\\folder2', 'dir')
+    
+
   def test_Delete(self):
-    pass
+    # can delete drives
+    self.fs.Create('drive', 'X', None)
+    self.assertEqual(len(self.fs.entities), 1)
+    self.fs.Delete('X')
+    self.assertEqual(len(self.fs.entities), 0)
 
   def test_Move(self):
     pass

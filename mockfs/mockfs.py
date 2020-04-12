@@ -33,9 +33,7 @@ class MockFileSystem:
     """
     # ensure provided type is valid
     if _type not in ENTITY_TYPES:
-      msg = 'Unsupported type: "{}"'.format(_type)
-      raise IllegalFileSystemOperationError(msg)
-    # check valid location/name
+      raise IllegalFileSystemOperationError('Unsupported type: "{}"'.format(_type))
     full_path = split_path(path, name)
     # ensure parents exist
     
@@ -43,7 +41,7 @@ class MockFileSystem:
     if full_path in self._entities.keys():
       raise FileExistsError('The specified path already exists.')
     # ensure drives can only be top-level
-    
+
     # add entity to file-system registry
     item = entity(self, _type, full_path)
     self._entities[full_path] = item
@@ -59,11 +57,9 @@ class MockFileSystem:
 
   def Move(self, src, dest):
     """Changes the parent of an entity.
-
     Arguments:
       src -- the source entity's current path
       dest -- the target destination of the new path if successful
-    
     Raises:
       FileNotFoundError
       FileExistsError
@@ -72,12 +68,10 @@ class MockFileSystem:
 
   def WriteToFile(self, path, content):
     """Writes content to a text file.
-    
     Arguments:
       path -- the path to the text file to write to
       content -- the content to be written to the text file. 
         This will overwrite any content already there.
-    
     Raises:
       NotATextFileError
     """
