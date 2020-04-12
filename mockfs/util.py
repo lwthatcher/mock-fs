@@ -18,6 +18,6 @@ def split_path(path, name=None):
     path = path.split('\\')
   # append name if present
   if name is not None:
-    path = list(path) + [name]
+    path = list(path or []) + [name]
   # return as a tuple
   return tuple(path)

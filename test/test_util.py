@@ -36,6 +36,10 @@ class TestUtil(TestCase):
     path = split_path('', 'name')
     self.assertEqual(path, ('name',))
 
+  def test_split_path__null_path__name_included(self):
+    path = split_path(None, 'name')
+    self.assertEqual(path, ('name',))
+
   def test_split_path__empty_name(self):
     # probably not desirable, but currently the expected behavior
     path = split_path('D', '')

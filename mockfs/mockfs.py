@@ -1,7 +1,7 @@
 """contains container class for basic mock file system access"""
 import os
-from .util import IllegalFileSystemOperationError
-from .entities import ENTITY_TYPES
+from .util import IllegalFileSystemOperationError, split_path
+from .entities import ENTITY_TYPES, entity
 
 
 class MockFileSystem:
@@ -36,8 +36,17 @@ class MockFileSystem:
       msg = 'Unsupported type: "{}"'.format(_type)
       raise IllegalFileSystemOperationError(msg)
     # check valid location/name
-    # create entity
-    # add entity to registry
+    full_path = split_path(path, name)
+    # ensure parents exist
+    
+    # ensure does not already exist
+    if full_path in self._entities.keys():
+      raise FileExistsError('The specified path already exists.')
+    # ensure drives can only be top-level
+    
+    # add entity to file-system registry
+    item = entity(self, _type, full_path)
+    self._entities[full_path] = item
 
   def Delete(self, path):
     """Deletes the entity at the specified path
