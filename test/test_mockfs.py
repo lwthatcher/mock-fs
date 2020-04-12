@@ -125,4 +125,14 @@ class TestMockFileSystem(TestCase):
     self.assertEqual(x.Type, 'drive')
     self.assertEqual(y.Type, 'folder')
     self.assertEqual(z.Type, 'zip')
+
+
+  def test_parents_exist(self):
+    self.fs.Create('drive', 'X', None)
+    self.fs.Create('folder', 'Y', 'X')
+    self.assertTrue(self.fs.parents_exist(('X', 'Y', 'Z')))
+    self.assertTrue(self.fs.parents_exist(('X', 'foo')))
+    self.assertTrue(self.fs.parents_exist(('X', 'Y')))
+    self.assertFalse(self.fs.parents_exist(('X', 'Y', 'Z', 'ducks')))
+    self.assertFalse(self.fs.parents_exist(('X', 'Z', 'ducks')))
   # endregion

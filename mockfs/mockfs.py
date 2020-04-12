@@ -83,6 +83,12 @@ class MockFileSystem:
   # endregion
 
   # region [Helper Methods]
-  def get(self, path):
-    return self._entities.get(path)
+  def get(self, full_path):
+    return self._entities.get(full_path)
+
+  def parents_exist(self, full_path):
+    _p = full_path[:-1]  # parent path
+    parents = [_p[:i+1] for i in range(len(_p))]  # paths for all ancestors
+    exists = [p in self._entities.keys() for p in parents]  # bool array if exists
+    return all(exists)
   # endregion
