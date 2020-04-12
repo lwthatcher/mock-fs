@@ -84,5 +84,5 @@ class MockFileSystem:
 
   # region [Helper Methods]
   def get(self, path):
-    return self._entities.get[path]
+    return self._entities.get(path)
   # endregion
