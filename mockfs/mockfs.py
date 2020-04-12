@@ -47,7 +47,11 @@ class MockFileSystem:
     self._entities[full_path] = item
 
   def Delete(self, path):
-    """Deletes the entity at the specified path
+    """Deletes the file-system entity at the specified path.
+
+    If the specified entity contains other entities,
+    all child entities are also deleted.
+
     Arguments:
       path -- the path to the entity to delete
     Raises:
