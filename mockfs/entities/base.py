@@ -5,8 +5,11 @@ class FS_Entity:
   """Base class for other entities, should not be used directly.
 
   A proper subclass must include the TYPE=<type> in the class definition.
-  This avoids passing the type through the constructor,
-  making it hard to set invalid types without creating a complete sub-class.
+  This avoids passing the type through the constructor.
+
+  Example:
+    class ImageFile(FS_Entity, TYPE='image'):
+      ...
   """
   # region [Constructor]
   def __init__(self, fs, _type, full_path):
@@ -22,8 +25,13 @@ class FS_Entity:
     self._full_path = full_path  # assume a tuple
 
   @classmethod
-  def __init_subclass__(cls, TYPE, **kwargs):
-    """Called from the class defition of implementing sub-classes"""
+  def __init_subclass__(cls, TYPE='?', **kwargs):
+    """Called from the class defition of implementing sub-classes.
+    
+    Note that TYPE is added as a keyword argument 
+    to avoid inheritance issues with intermediate abstract classes,
+    such as ContainerEntity.
+    """
     cls.TYPE = TYPE
     super().__init_subclass__(**kwargs)
   # endregion
@@ -60,7 +68,7 @@ class FS_Entity:
   # endregion
 
 
-class ContainerEntity(FS_Entity, TYPE='folder'):
+class ContainerEntity(FS_Entity):
   """file-system abstract entity for parent entities"""
   # region [Properties]
   @property
