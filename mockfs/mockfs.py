@@ -69,6 +69,12 @@ class MockFileSystem:
       FileNotFoundError
       FileExistsError
     """
+    # Ensure the src file exists
+    # Ensure the dest path does not already exist
+    # change the path internally for the src file
+    # change the path names for all children of the src file
+    # add updated entity (and children) to _entities dict
+    # remove old keys from entity dict
     pass
 
   def WriteToFile(self, path, content):
