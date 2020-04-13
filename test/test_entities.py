@@ -6,7 +6,7 @@ not necessarily have to be valid paths within the file-system.
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.entities import entity
-from mockfs.entities import FolderEntity, DriveEntity, TextFileEntity, ZipFileEntity
+from mockfs.entities import Folder, DriveEntity, TextFileEntity, ZipFileEntity
 
 # several constants used for convenience
 FPATH = ('D', 'dir')
@@ -23,7 +23,7 @@ class TestEntityFactory(TestCase):
 
   def test_entity__folder(self):
     f = entity(self.fs, 'folder', FPATH)
-    self.assertIsInstance(f, FolderEntity)
+    self.assertIsInstance(f, Folder)
 
   def test_entity__drive(self):
     f = entity(self.fs, 'drive', DPATH)
@@ -41,26 +41,26 @@ class TestEntityFactory(TestCase):
 
 
 # region [Folder Tests]
-class TestFolderEntity(TestCase):
+class TestFolder(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
-    self.assertIsInstance(f, FolderEntity)
+    f = Folder(fs, FPATH)
+    self.assertIsInstance(f, Folder)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Type, 'folder')
 
   def test_Name(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Name, 'dir')
   
   def test_Path(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Path, 'D\\dir')
 # endregion
 

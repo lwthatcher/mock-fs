@@ -2,7 +2,7 @@
 from .base import ContainerEntity
 
 
-class FolderEntity(ContainerEntity, TYPE='folder'):
+class Folder(ContainerEntity, TYPE='folder'):
 
   def __init__(self, fs, full_path):
     super().__init__( fs, full_path)
