@@ -6,7 +6,7 @@ not necessarily have to be valid paths within the file-system.
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.entities import entity
-from mockfs.entities import Folder, Drive, TextFileEntity, ZipFile
+from mockfs.entities import Folder, Drive, TextFile, ZipFile
 
 # several constants used for convenience
 FPATH = ('D', 'dir')
@@ -31,7 +31,7 @@ class TestEntityFactory(TestCase):
 
   def test_entity__text_file(self):
     f = entity(self.fs, 'text', TPATH)
-    self.assertIsInstance(f, TextFileEntity)
+    self.assertIsInstance(f, TextFile)
 
   def test_entity__zip_file(self):
     f = entity(self.fs, 'zip', ZPATH)
@@ -90,26 +90,26 @@ class TestDrive(TestCase):
 
 
 # region [Text File Tests]
-class TestTextFileEntity(TestCase):
+class TestTextFile(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
-    self.assertIsInstance(f, TextFileEntity)
+    f = TextFile(fs, TPATH)
+    self.assertIsInstance(f, TextFile)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Type, 'text')
   
   def test_Name(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Name, 'file.txt')
 
   def test_Path(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Path, 'D\\file.txt')
 # endregion
 
