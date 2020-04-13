@@ -2,7 +2,27 @@
 Simple proof-of-concept mock file system example written in python 3.
 
 ## Usage
-> PENDING DOCUMENTATION
+The application can be imported as a python package `mockfs`.
+
+#### Importing
+If launching python from the project root folder, this can be accomplished through:
+```
+import mockfs
+```
+The primary file system object is the `MockFileSystem` class.
+#### Example
+```
+from mockfs import MockFileSystem
+fs = MockFileSystem()
+
+fs.Create('drive', 'C', None)
+fs.Create('folder', 'f', 'C')
+fs.Create('text', 'text.txt', 'C\\f')
+fs.WriteToFile('C\\f\\text.txt', 'Hello World')
+fs.Delete('C\\f\\text.txt')
+```
+
+> Additional usage examples can be seen in the `test` folder
 
 ### Running Tests
 To run all unit tests, enter the following command from the `mock-fs` project directory:
