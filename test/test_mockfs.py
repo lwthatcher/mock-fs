@@ -114,7 +114,6 @@ class TestMockFileSystem(TestCase):
     self.fs.Delete('Y')
     self.assertEqual(len(self.fs.entities), 0)
 
-
   def test_Delete__does_not_exist(self):
     # empty file-system
     with self.assertRaises(FileNotFoundError) as cm:
@@ -161,6 +160,18 @@ class TestMockFileSystem(TestCase):
     self.assertFalse(self.fs.exists(('X', 'F', 'Z', 'text.txt')))
     self.assertTrue(self.fs.exists(('Y', 'F', 'Z', 'text.txt')))
     self.assertEqual(len(self.fs.entities), 5)  # file-system size unchanged
+
+  def test_Move__src_does_not_exist(self):
+    self.fs.Create('drive', 'X', None)
+    self.fs.Create('drive', 'Y', None)
+    self.fs.Create('text', 'text.txt', 'X')
+    with self.assertRaises(FileNotFoundError) as cm:
+      self.fs.Move('X\\foo.txt', 'Y\\foo.txt')
+
+  # TODO: additional Move tests:
+    # - dest already exists
+    # - dest parent doesn't exist
+    # - dest is a drive, src is not
     
   def test_WriteToFile(self):
     self.fs.Create('drive', 'Y', None)
