@@ -1,12 +1,12 @@
 """module for defining the multiple file-system 'entity' types"""
 
 # expose only the main concrete file-system entities
-from .folder import Folder, DriveEntity
+from .folder import Folder, Drive
 from .text import TextFileEntity
 from .zip import ZipFileEntity
 
 # map from entity names to their appropriate class
-_ENTITIES = {'drive': DriveEntity, 
+_ENTITIES = {'drive': Drive, 
   'folder': Folder,
   'text': TextFileEntity,
   'zip': ZipFileEntity}
