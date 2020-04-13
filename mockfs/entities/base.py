@@ -3,31 +3,41 @@ import os
 
 class FS_Entity:
   """Base class for other entities, should not be used directly.
+
+  A proper subclass must include the TYPE=<type> in the class definition.
+  This avoids passing the type through the constructor.
+
+  Example:
+    class ImageFile(FS_Entity, TYPE='image'):
+      ...
   """
   # region [Constructor]
-  def __init__(self, fs, _type, full_path):
+  def __init__(self, fs, full_path):
     """
     Arguments:
       fs - the MockFileSystem object containing this entity
-      _type - internally sets the provided entity-type
       full_path - a list-like seperating out each path element,
         with the last element being the name of the entity
     """
     self._fs = fs
-    self._type = _type
     self._full_path = full_path  # assume a tuple
 
-  # @classmethod
-  # def __init_subclass__(cls, TYPE, **kwargs):
-  #   """Called from the class defition of implementing sub-classes"""
-  #   cls.TYPE = TYPE
-  #   super().__init_subclass__(**kwargs)
+  @classmethod
+  def __init_subclass__(cls, TYPE='?', **kwargs):
+    """Called from the class defition of implementing sub-classes.
+    
+    Note that TYPE is added as a keyword argument 
+    to avoid inheritance issues with intermediate abstract classes,
+    such as ContainerEntity.
+    """
+    cls.TYPE = TYPE
+    super().__init_subclass__(**kwargs)
   # endregion
 
   # region [Properties]
   @property
   def Type(self):
-    return self._type
+    return self.TYPE
 
   @property
   def Name(self):

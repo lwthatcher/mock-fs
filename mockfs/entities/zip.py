@@ -2,10 +2,10 @@
 from .base import ContainerEntity
 
 
-class ZipFileEntity(ContainerEntity):
+class ZipFile(ContainerEntity, TYPE='zip'):
   # region [Constructor]
   def __init__(self, fs, full_path):
-    super().__init__(fs, 'zip', full_path)
+    super().__init__(fs, full_path)
   # endregion
 
   # region [Overrides Methods]

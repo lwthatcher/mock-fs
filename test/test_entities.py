@@ -6,7 +6,7 @@ not necessarily have to be valid paths within the file-system.
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.entities import entity
-from mockfs.entities import FolderEntity, DriveEntity, TextFileEntity, ZipFileEntity
+from mockfs.entities import Folder, Drive, TextFile, ZipFile
 
 # several constants used for convenience
 FPATH = ('D', 'dir')
@@ -23,117 +23,117 @@ class TestEntityFactory(TestCase):
 
   def test_entity__folder(self):
     f = entity(self.fs, 'folder', FPATH)
-    self.assertIsInstance(f, FolderEntity)
+    self.assertIsInstance(f, Folder)
 
   def test_entity__drive(self):
     f = entity(self.fs, 'drive', DPATH)
-    self.assertIsInstance(f, DriveEntity)
+    self.assertIsInstance(f, Drive)
 
   def test_entity__text_file(self):
     f = entity(self.fs, 'text', TPATH)
-    self.assertIsInstance(f, TextFileEntity)
+    self.assertIsInstance(f, TextFile)
 
   def test_entity__zip_file(self):
     f = entity(self.fs, 'zip', ZPATH)
-    self.assertIsInstance(f, ZipFileEntity)
+    self.assertIsInstance(f, ZipFile)
 
 # endregion
 
 
 # region [Folder Tests]
-class TestFolderEntity(TestCase):
+class TestFolder(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
-    self.assertIsInstance(f, FolderEntity)
+    f = Folder(fs, FPATH)
+    self.assertIsInstance(f, Folder)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Type, 'folder')
 
   def test_Name(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Name, 'dir')
   
   def test_Path(self):
     fs = MockFileSystem()
-    f = FolderEntity(fs, FPATH)
+    f = Folder(fs, FPATH)
     self.assertEqual(f.Path, 'D\\dir')
 # endregion
 
 # region [Drive Tests]
-class TestDriveEntity(TestCase):
+class TestDrive(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = DriveEntity(fs, DPATH)
-    self.assertIsInstance(f, DriveEntity)
+    f = Drive(fs, DPATH)
+    self.assertIsInstance(f, Drive)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = DriveEntity(fs, DPATH)
+    f = Drive(fs, DPATH)
     self.assertEqual(f.Type, 'drive')
 
   def test_Name(self):
     fs = MockFileSystem()
-    f = DriveEntity(fs, DPATH)
+    f = Drive(fs, DPATH)
     self.assertEqual(f.Name, 'D')
 
   def test_Path(self):
     fs = MockFileSystem()
-    f = DriveEntity(fs, DPATH)
+    f = Drive(fs, DPATH)
     self.assertEqual(f.Path, 'D')
 # endregion
 
 
 # region [Text File Tests]
-class TestTextFileEntity(TestCase):
+class TestTextFile(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
-    self.assertIsInstance(f, TextFileEntity)
+    f = TextFile(fs, TPATH)
+    self.assertIsInstance(f, TextFile)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Type, 'text')
   
   def test_Name(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Name, 'file.txt')
 
   def test_Path(self):
     fs = MockFileSystem()
-    f = TextFileEntity(fs, TPATH)
+    f = TextFile(fs, TPATH)
     self.assertEqual(f.Path, 'D\\file.txt')
 # endregion
 
 
 # region [Zip File Tests]
-class TestZipFileEntity(TestCase):
+class TestZipFile(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
-    self.assertIsInstance(f, ZipFileEntity)
+    f = ZipFile(fs, ZPATH)
+    self.assertIsInstance(f, ZipFile)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Type, 'zip')
 
   def test_Name(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Name, 'zippy.zip')
 
   def test_Path(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Path, 'D\\zippy.zip')
 # endregion

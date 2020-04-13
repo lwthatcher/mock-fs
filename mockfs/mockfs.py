@@ -1,6 +1,6 @@
 """contains container class for basic mock file system access"""
 import os
-from .util import IllegalFileSystemOperationError, split_path
+from .util import IllegalFSOpError, split_path
 from .entities import ENTITY_TYPES, entity
 
 
@@ -8,15 +8,14 @@ class MockFileSystem:
 
   # region [Constructor]
   def __init__(self):
-    # TODO: possibly allow basic initialization for debugging?
     self._entities = {}
   # endregion
 
   # region [Properties]
   @property
   def entities(self):
-    # TODO: possible map from internal list to proper entity objects?
-    return self._entities
+    # returns just the entities (in no particular order)
+    return self._entities.values()
   # endregion
 
   # region [Public Methods]
@@ -29,11 +28,11 @@ class MockFileSystem:
     Raises:
         FileNotFoundError -- when the parent directory/entity cannot be found
         FileExistsError -- an entity with the given name and parent already exists
-        IllegalFileSystemOperationError
+        IllegalFSOpError
     """
     # ensure provided type is valid
     if _type not in ENTITY_TYPES:
-      raise IllegalFileSystemOperationError('Unsupported type: "{}"'.format(_type))
+      raise IllegalFSOpError('Unsupported type: "{}"'.format(_type))
     full_path = split_path(path, name)
     # ensure parents exist
     if not self.parents_exist(full_path):
@@ -41,7 +40,7 @@ class MockFileSystem:
     # ensure does not already exist
     if full_path in self._entities.keys():
       raise FileExistsError('The specified path already exists.')
-    # ensure drives can only be top-level
+    # ensure only drives can be top-level
 
     # ensure no nesting inside of text files
     # add entity to file-system registry
