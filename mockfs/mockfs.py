@@ -8,15 +8,14 @@ class MockFileSystem:
 
   # region [Constructor]
   def __init__(self):
-    # TODO: possibly allow basic initialization for debugging?
     self._entities = {}
   # endregion
 
   # region [Properties]
   @property
   def entities(self):
-    # TODO: possible map from internal list to proper entity objects?
-    return self._entities
+    # returns just the entities (in no particular order)
+    return self._entities.values()
   # endregion
 
   # region [Public Methods]
@@ -41,8 +40,8 @@ class MockFileSystem:
     # ensure does not already exist
     if full_path in self._entities.keys():
       raise FileExistsError('The specified path already exists.')
-    # ensure drives can only be top-level
-
+    # ensure only drives can be top-level
+    
     # ensure no nesting inside of text files
     # add entity to file-system registry
     item = entity(self, _type, full_path)

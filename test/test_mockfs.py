@@ -46,6 +46,18 @@ class TestMockFileSystem(TestCase):
     with self.assertRaises(IllegalFileSystemOperationError) as cm:
       self.fs.Create('drive', 'Q', 'Y\\f1')  # should raise error
 
+  def test_Create__drive__falsy_path(self):
+    # path is empty string
+    self.fs.Create('drive', 'X', '')
+    self.assertEqual(len(self.fs.entities), 1)
+    # path is empty list
+    self.fs.Create('drive', 'Y', [])
+    self.assertEqual(len(self.fs.entities), 2)
+    # path is empty tuple
+    self.fs.Create('drive', 'Z', ())
+    self.assertEqual(len(self.fs.entities), 3)
+    # Note: don't do these last two, but they're technically valid
+
   def test_Create__text_file_nesting(self):
     self.fs.Create('drive', 'X', None)
     self.fs.Create('text', 'T', 'X')
