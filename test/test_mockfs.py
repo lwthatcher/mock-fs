@@ -30,7 +30,7 @@ class TestMockFileSystem(TestCase):
     self.fs.Create('text', 'file.txt', 'X\\folder1')
     self.assertEqual(len(self.fs.entities), 5)
 
-  def test_Create__drive_constrains(self):
+  def test_Create__drive_constraints(self):
     # only drives can be top-level
     with self.assertRaises(IllegalFileSystemOperationError) as cm:
       self.fs.Create('folder', 'X', None)
@@ -226,4 +226,17 @@ class TestMockFileSystem(TestCase):
     self.assertTrue(self.fs.exists(('X',)))
     self.assertFalse(self.fs.exists(('Y', 'X')))
     self.assertFalse(self.fs.exists(('foobar',)))
+
+  def test_get_children(self):
+    self.fs.Create('drive', 'A', None)
+    self.fs.Create('folder', 'B', 'A')
+    self.fs.Create('folder', 'C', 'A\\B')
+    self.fs.Create('zip', 'D1', 'A\\B\\C')
+    self.fs.Create('text', 'D2', 'A\\B\\C')
+    self.fs.Create('folder', 'R', 'A')
+    self.fs.Create('drive', 'X', None)
+    # children of A\B
+    children = self.fs.get_children(('A', 'B'))
+    self.assertEqual(len(children), 3)
+    self.assertSetEqual({c.Name for c in children}, {'C', 'D1', 'D2'})
   # endregion

@@ -61,13 +61,14 @@ class ContainerEntity(FS_Entity):
   # region [Properties]
   @property
   def children(self):
-    # TODO: implement
-    return []
+    return self._fs.get_children(self._full_path)
   # endregion
 
   # region [Implementation Methods]
   def _compute_size(self):
-    # TODO: implement
-    return 0
+    size = 0
+    for c in self.children:
+      size += c.Size
+    return size
   # endregion
 

@@ -43,6 +43,7 @@ class MockFileSystem:
       raise FileExistsError('The specified path already exists.')
     # ensure drives can only be top-level
 
+    # ensure no nesting inside of text files
     # add entity to file-system registry
     item = entity(self, _type, full_path)
     self._entities[full_path] = item
@@ -102,4 +103,10 @@ class MockFileSystem:
     parents = [_p[:i+1] for i in range(len(_p))]  # paths for all ancestors
     exists = [p in self._entities.keys() for p in parents]  # bool array if exists
     return all(exists)
+
+  def get_children(self, full_path):
+    def childof(a, b):
+      return a[:len(b)] == b and a != b  # a starts with b, but excludes b itself
+    result = [v for k,v in self._entities.items() if childof(k, full_path)]
+    return result
   # endregion
