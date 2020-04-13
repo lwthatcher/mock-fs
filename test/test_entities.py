@@ -6,7 +6,7 @@ not necessarily have to be valid paths within the file-system.
 from unittest import TestCase
 from mockfs import MockFileSystem
 from mockfs.entities import entity
-from mockfs.entities import Folder, Drive, TextFileEntity, ZipFileEntity
+from mockfs.entities import Folder, Drive, TextFileEntity, ZipFile
 
 # several constants used for convenience
 FPATH = ('D', 'dir')
@@ -35,7 +35,7 @@ class TestEntityFactory(TestCase):
 
   def test_entity__zip_file(self):
     f = entity(self.fs, 'zip', ZPATH)
-    self.assertIsInstance(f, ZipFileEntity)
+    self.assertIsInstance(f, ZipFile)
 
 # endregion
 
@@ -115,25 +115,25 @@ class TestTextFileEntity(TestCase):
 
 
 # region [Zip File Tests]
-class TestZipFileEntity(TestCase):
+class TestZipFile(TestCase):
 
   def test_constructor(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
-    self.assertIsInstance(f, ZipFileEntity)
+    f = ZipFile(fs, ZPATH)
+    self.assertIsInstance(f, ZipFile)
 
   def test_Type(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Type, 'zip')
 
   def test_Name(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Name, 'zippy.zip')
 
   def test_Path(self):
     fs = MockFileSystem()
-    f = ZipFileEntity(fs, ZPATH)
+    f = ZipFile(fs, ZPATH)
     self.assertEqual(f.Path, 'D\\zippy.zip')
 # endregion
