@@ -237,6 +237,10 @@ class TestMockFileSystem(TestCase):
     self.fs.Create('drive', 'X', None)
     # children of A\B
     children = self.fs.get_children(('A', 'B'))
-    self.assertEqual(len(children), 3)
-    self.assertSetEqual({c.Name for c in children}, {'C', 'D1', 'D2'})
+    self.assertEqual(len(children), 1)
+    self.assertSetEqual({c.Name for c in children}, {'C',})
+    # children of A\B\C
+    children = self.fs.get_children(('A', 'B', 'C'))
+    self.assertEqual(len(children), 2)
+    self.assertSetEqual({c.Name for c in children}, {'D1', 'D2'})
   # endregion
