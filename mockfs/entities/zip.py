@@ -8,7 +8,7 @@ class ZipFileEntity(ContainerEntity):
     super().__init__(fs, 'zip', full_path)
   # endregion
 
-  # region [Overwrites Methods]
+  # region [Overrides Methods]
   def _compute_size(self):
     unzipped_size = super()._compute_size()
     return unzipped_size / 2

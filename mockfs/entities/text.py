@@ -17,7 +17,11 @@ class TextFileEntity(FS_Entity):
 
   # region [Public Methods]
   def write(self, content):
-    # TODO: add append kwarg option
     # coerce to string in case non-string input is accidently provided
     self._content = str(content)
+  # endregion
+
+  # region [Overrides Methods]
+  def _compute_size(self):
+    return len(self._content)
   # endregion
