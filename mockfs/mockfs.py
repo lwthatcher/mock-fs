@@ -38,7 +38,7 @@ class MockFileSystem:
     if not self.parents_exist(full_path):
       raise FileNotFoundError('The path to the specified item does not exist.')
     # ensure does not already exist
-    if full_path in self._entities.keys():
+    if self.exists(full_path):
       raise FileExistsError('The specified path already exists.')
     # ensure only drives can be top-level
 
@@ -91,7 +91,9 @@ class MockFileSystem:
       FileNotFoundError
       NotATextFileError
     """
-    pass
+    full_path = split_path(path)
+    if not self.exists(full_path):
+      raise FileNotFoundError('The path to the specified item does not exist.')
   # endregion
 
   # region [Helper Methods]
