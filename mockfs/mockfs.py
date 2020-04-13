@@ -1,6 +1,6 @@
 """contains container class for basic mock file system access"""
 import os
-from .util import IllegalFSOpError, split_path
+from .util import IllegalFSOpError, NotATextFileError, split_path
 from .entities import ENTITY_TYPES, entity
 
 
@@ -92,8 +92,15 @@ class MockFileSystem:
       NotATextFileError
     """
     full_path = split_path(path)
+    # check the path exists
     if not self.exists(full_path):
       raise FileNotFoundError('The path to the specified item does not exist.')
+    # ensure it is a text file
+    txt = self.get(full_path)
+    if txt.Type != 'text':
+      raise NotATextFileError("The file '{}' is not a text file.".format(txt.Path))
+    # write the content
+    txt.write(content)
   # endregion
 
   # region [Helper Methods]
