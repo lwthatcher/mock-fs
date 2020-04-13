@@ -5,7 +5,7 @@ is *required* for measuring expected behavior.
 """
 from unittest import TestCase
 from mockfs import MockFileSystem
-from mockfs.util import IllegalFileSystemOperationError, NotATextFileError
+from mockfs.util import IllegalFSOpError, NotATextFileError
 
 
 class TestMockFileSystem(TestCase):
@@ -32,18 +32,18 @@ class TestMockFileSystem(TestCase):
 
   def test_Create__drive_constraints(self):
     # only drives can be top-level
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('folder', 'X', None)
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('zip', 'X', None)
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('text', 'X', None)
     # drives cannot be nested
     self.fs.Create('drive', 'Y', None)  # should succeed
     self.fs.Create('folder', 'f1', 'Y') # should also succeed
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('drive', 'Z', 'Y')  # should raise error
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('drive', 'Q', 'Y\\f1')  # should raise error
 
   def test_Create__drive__falsy_path(self):
@@ -62,17 +62,17 @@ class TestMockFileSystem(TestCase):
     self.fs.Create('drive', 'X', None)
     self.fs.Create('text', 'T', 'X')
     # cannot nest folders inside of text files
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('folder', 'f1', 'X\\T')
     # cannot nest zips inside of text files
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('zip', 'Z', 'X\\T')
     # cannot nest other text files inside of text files
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('text', 'text.txt', 'X\\T')
 
   def test_Create__invalid_type(self):
-    with self.assertRaises(IllegalFileSystemOperationError) as cm:
+    with self.assertRaises(IllegalFSOpError) as cm:
       self.fs.Create('foo', 'bar', None)
     self.assertEqual(str(cm.exception), 'Unsupported type: "foo"')
 

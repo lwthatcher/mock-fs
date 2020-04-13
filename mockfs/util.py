@@ -3,7 +3,7 @@
 class NotATextFileError(Exception):
   pass
 
-class IllegalFileSystemOperationError(Exception):
+class IllegalFSOpError(Exception):
   pass
 
 
