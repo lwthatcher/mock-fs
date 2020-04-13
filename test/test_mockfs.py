@@ -122,7 +122,7 @@ class TestMockFileSystem(TestCase):
     self.fs.Create('folder', 'f2', 'Y\\A')
     self.assertEqual(len(self.fs.entities), 4)
     self.fs.Delete('Y\\A')
-    self.assertEqual(len(self.fs.entities), 1)
+    self.assertEqual(len(self.fs.entities), 2)
 
   def test_Delete__does_not_exist(self):
     # empty file-system
