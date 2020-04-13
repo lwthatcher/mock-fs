@@ -47,10 +47,8 @@ class MockFileSystem:
     if self.exists(full_path):
       raise FileExistsError('The specified path already exists.')
     # ensure no nesting inside of text files
-    if path:
-      parent = self.get(split_path(path))
-      if parent.Type == 'text':
-        raise IllegalFSOpError('Text files cannot be parents. It is forbidden.')
+    if path and self.get(split_path(path)).Type == 'text':
+      raise IllegalFSOpError('Text files cannot be parents. It is forbidden.')
     # add entity to file-system registry
     item = entity(self, _type, full_path)
     self._entities[full_path] = item
