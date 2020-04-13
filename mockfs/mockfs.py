@@ -33,6 +33,12 @@ class MockFileSystem:
     # ensure provided type is valid
     if _type not in ENTITY_TYPES:
       raise IllegalFSOpError('Unsupported type: "{}"'.format(_type))
+    # ensure only drives can be top-level
+    if not path and _type != 'drive':
+      raise IllegalFSOpError('Only drives can be top-level entities.')
+    # ensure not a nested drive
+    if _type == 'drive' and path:
+      raise IllegalFSOpError('Drives cannot be nested inside of other entities.')
     full_path = split_path(path, name)
     # ensure parents exist
     if not self.parents_exist(full_path):
@@ -40,8 +46,6 @@ class MockFileSystem:
     # ensure does not already exist
     if self.exists(full_path):
       raise FileExistsError('The specified path already exists.')
-    # ensure only drives can be top-level
-
     # ensure no nesting inside of text files
     # add entity to file-system registry
     item = entity(self, _type, full_path)
