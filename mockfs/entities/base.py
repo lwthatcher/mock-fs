@@ -3,6 +3,10 @@ import os
 
 class FS_Entity:
   """Base class for other entities, should not be used directly.
+
+  A proper subclass must include the TYPE=<type> in the class definition.
+  This avoids passing the type through the constructor,
+  making it hard to set invalid types without creating a complete sub-class.
   """
   # region [Constructor]
   def __init__(self, fs, _type, full_path):
@@ -17,17 +21,17 @@ class FS_Entity:
     self._type = _type
     self._full_path = full_path  # assume a tuple
 
-  # @classmethod
-  # def __init_subclass__(cls, TYPE, **kwargs):
-  #   """Called from the class defition of implementing sub-classes"""
-  #   cls.TYPE = TYPE
-  #   super().__init_subclass__(**kwargs)
+  @classmethod
+  def __init_subclass__(cls, TYPE, **kwargs):
+    """Called from the class defition of implementing sub-classes"""
+    cls.TYPE = TYPE
+    super().__init_subclass__(**kwargs)
   # endregion
 
   # region [Properties]
   @property
   def Type(self):
-    return self._type
+    return self.TYPE
 
   @property
   def Name(self):
@@ -56,7 +60,7 @@ class FS_Entity:
   # endregion
 
 
-class ContainerEntity(FS_Entity):
+class ContainerEntity(FS_Entity, TYPE='folder'):
   """file-system abstract entity for parent entities"""
   # region [Properties]
   @property
