@@ -12,16 +12,14 @@ class FS_Entity:
       ...
   """
   # region [Constructor]
-  def __init__(self, fs, _type, full_path):
+  def __init__(self, fs, full_path):
     """
     Arguments:
       fs - the MockFileSystem object containing this entity
-      _type - internally sets the provided entity-type
       full_path - a list-like seperating out each path element,
         with the last element being the name of the entity
     """
     self._fs = fs
-    self._type = _type
     self._full_path = full_path  # assume a tuple
 
   @classmethod

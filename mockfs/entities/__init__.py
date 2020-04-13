@@ -10,6 +10,7 @@ _ENTITIES = {'drive': DriveEntity,
   'folder': FolderEntity,
   'text': TextFileEntity,
   'zip': ZipFileEntity}
+  
 # list of valid entity types
 ENTITY_TYPES = _ENTITIES.keys()
 

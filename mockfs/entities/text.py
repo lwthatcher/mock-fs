@@ -5,7 +5,7 @@ from .base import FS_Entity
 class TextFileEntity(FS_Entity, TYPE='text'):
   # region [Constructor]
   def __init__(self, fs, full_path):
-    super().__init__(fs, 'text', full_path)
+    super().__init__(fs, full_path)
     self._content = ""
   # endregion
 
