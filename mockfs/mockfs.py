@@ -58,7 +58,9 @@ class MockFileSystem:
     Raises:
       FileNotFoundError -- the target entity cannot be found
     """
-    pass
+    full_path = split_path(path)
+    if not self.exists(full_path):
+      raise FileNotFoundError('The path to the specified item does not exist.')
 
   def Move(self, src, dest):
     """Changes the parent of an entity.
@@ -70,7 +72,9 @@ class MockFileSystem:
       FileExistsError
     """
     # Ensure the src file exists
+    # Ensure the dest parent path exists
     # Ensure the dest path does not already exist
+    # (Ensure drive constraints?)
     # change the path internally for the src file
     # change the path names for all children of the src file
     # add updated entity (and children) to _entities dict
