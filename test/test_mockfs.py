@@ -125,7 +125,9 @@ class TestMockFileSystem(TestCase):
     with self.assertRaises(FileNotFoundError) as cm:
       self.fs.Delete('Y')
     self.assertEqual(len(self.fs.entities), 1)
-    # not idempotent
+
+  def test_Delete__not_idempotent(self):
+    self.fs.Create('drive', 'X', None)
     self.fs.Delete('X') # should succeed
     self.assertEqual(len(self.fs.entities), 0)
     with self.assertRaises(FileNotFoundError) as cm:
