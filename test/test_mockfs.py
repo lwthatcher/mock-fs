@@ -108,12 +108,21 @@ class TestMockFileSystem(TestCase):
     self.assertEqual(len(self.fs.entities), 1)
     
   def test_Delete__recursive(self):
+    # deletes recursively
     self.fs.Create('drive', 'Y', None)
     self.fs.Create('folder', 'f1', 'Y')
     self.fs.Create('folder', 'f2', 'Y\\f1')
-    self.assertEqual(len(self.fs.entities), 2)
+    self.assertEqual(len(self.fs.entities), 3)
     self.fs.Delete('Y')
     self.assertEqual(len(self.fs.entities), 0)
+    # don't delete other entities
+    self.fs.Create('drive', 'Y', None)
+    self.fs.Create('folder', 'A', 'Y')
+    self.fs.Create('folder', 'B', 'Y')
+    self.fs.Create('folder', 'f2', 'Y\\A')
+    self.assertEqual(len(self.fs.entities), 4)
+    self.fs.Delete('Y\\A')
+    self.assertEqual(len(self.fs.entities), 1)
 
   def test_Delete__does_not_exist(self):
     # empty file-system
@@ -290,4 +299,20 @@ class TestMockFileSystem(TestCase):
     children = self.fs.get_children(('A', 'B', 'C'))
     self.assertEqual(len(children), 2)
     self.assertSetEqual({c.Name for c in children}, {'D1', 'D2'})
+
+  def test_child_paths(self):
+    self.fs.Create('drive', 'A', None)
+    self.fs.Create('folder', 'B', 'A')
+    self.fs.Create('folder', 'C', 'A\\B')
+    self.fs.Create('zip', 'D1', 'A\\B\\C')
+    self.fs.Create('text', 'D2', 'A\\B\\C')
+    self.fs.Create('folder', 'R', 'A')
+    self.fs.Create('drive', 'X', None)
+    # all children of A\B
+    children = self.fs._child_paths(('A', 'B'))
+    self.assertEqual(len(children), 4)
+    self.assertIn(('A', 'B'), children)       # element included
+    self.assertIn(('A', 'B', 'C'), children)  # direct child
+    self.assertIn(('A', 'B', 'C', 'D1'), children)  # grandchild elements
+    self.assertIn(('A', 'B', 'C', 'D2'), children)
   # endregion

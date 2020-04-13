@@ -123,7 +123,14 @@ class MockFileSystem:
   def get_children(self, full_path):
     """returns list of entities of *direct* children for the provided path"""
     def childof(a, b):
-      return a[:len(b)] == b and len(a) == len(b) + 1
+      return a[:len(b)] == b and len(a) == len(b) + 1 
     result = [v for k,v in self._entities.items() if childof(k, full_path)]
+    return result
+
+  def _child_paths(self, full_path):
+    """returns list of paths of all children, as well as the provided path"""
+    def childof(a, b):
+      return a[:len(b)] == b
+    result = [k for k in self._entities.keys() if childof(k, full_path)]
     return result
   # endregion
